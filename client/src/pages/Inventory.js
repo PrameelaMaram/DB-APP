@@ -1,5 +1,6 @@
 import React from 'react';
-import { MySqlTable, MsSqlTable, MongoTable, OracleTable, PostgresTable,AppTable} from './Table';
+//import { MySqlTable, MsSqlTable, MongoTable, OracleTable, PostgresTable,AppTable} from './Table';
+import { MysqlTable,MSsqlTable,MongoTable,OracleTable,PostgresTable,AppTable} from './Table';
 export const Inventory = () => {
     return (
       <div className='inventory'>
@@ -19,14 +20,14 @@ export const Inventory = () => {
   export const MYSQL = () => {
     return (
       <div>
-        <MySqlTable/>
+        <MysqlTable/>
       </div>
     );
   };
-  export const MsSQL = () => {
+  export const MSsql = () => {
     return (
       <div >
-        <MsSqlTable />
+        <MSsqlTable />
       </div>
     );
   };

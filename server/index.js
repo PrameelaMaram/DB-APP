@@ -13,38 +13,8 @@ const db = mysql.createConnection({
     database: "dsot_dev",
 });
 
-
-app.post('/createApp',(req,res) => {
-    console.log(req.body)
-    const app_key = req.body.app_key
-    const current_state = req.body.current_state
-    const reporting_name = req.body.reporting_name
-    const brief_func = req.body.brief_func
-    const apm_owner = req.body.apm_owner
-    const app_type = req.body.app_type
-    const app_tech = req.body.app_tech
-    const db_tech = req.body.db_tech
-    const no_users = req.body.no_users
-    const availability = req.body.availability
-    const oper_impact = req.body.oper_impact
-    const revenue_impact = req.body.revenue_impact
-    const stores_or_custimpact = req.body.stores_or_custimpact
-    
-
-    db.query('INSERT INTO App_Inv(app_key,current_state,reporting_name,brief_func,apm_owner,app_type,app_tech,db_tech,no_users,availability,oper_impact,revenue_impact,stores_or_custimpact) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',
-    [app_key,current_state,reporting_name,brief_func,apm_owner,app_type,app_tech,db_tech,no_users,availability,oper_impact,revenue_impact,stores_or_custimpact], 
-    (err, result) => {
-        if(err){
-            console.log(err)
-        }else{
-            res.send("Insererted..")
-        }
-    });
-
-});
-
-app.get('/retrieveApp',(req,res) => {
-    db.query('SELECT * FROM App_Inv',(err,result) => {
+app.get('/retrieve',(req,res) => {
+    db.query('SELECT * FROM DB_Inv_Mysql',(err,result) => {
         if(err){
             console.log(err)
         } else{
@@ -52,44 +22,7 @@ app.get('/retrieveApp',(req,res) => {
         }
     })
 })
-
-app.put("/updateApp",(req,res) => {
-    console.log(req.body)
-    const app_name = req.body.app_name
-    const app_key = req.body.app_key
-    const current_state = req.body.current_state
-    const reporting_name = req.body.reporting_name
-    const brief_func = req.body.brief_func
-    const apm_owner = req.body.apm_owner
-    const app_type = req.body.app_type
-    const app_tech = req.body.app_tech
-    const db_tech = req.body.db_tech
-    const no_users = req.body.no_users
-    const availability = req.body.availability
-    const oper_impact = req.body.oper_impact
-    const revenue_impact = req.body.revenue_impact
-    const stores_or_custimpact = req.body.stores_or_custimpact
-    db.query('UPDATE App_Inv SET app_key=?,current_state=?,reporting_name=?,brief_func=?,apm_owner=?,app_type=?,app_tech=?,db_tech=?,no_users=?,availability=?,oper_impact=?,revenue_impact=?,stores_or_custimpact=? where app_name = ? ',[app_key,current_state,reporting_name,brief_func,apm_owner,app_type,app_tech,db_tech,no_users,availability,oper_impact,revenue_impact,stores_or_custimpact,app_name],(err,result) => {
-        if(err){
-            console.log(err)
-        }else{
-            res.send(result)
-        }
-    });
-})
-
-app.delete("/deleteApp/:app_name", (req, res) => {
-    const app_name = req.params.app_name;
-    console.log(id)
-    db.query("DELETE FROM App_Inv WHERE id = ?", app_name, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-  });
-
+ 
 
 app.post('/createMysql',(req,res) => {
     console.log(req.body)
@@ -125,17 +58,19 @@ app.post('/createMysql',(req,res) => {
 
 });
 
-app.get('/retrieveMysql',(req,res) => {
-    db.query('SELECT * FROM DB_Inv_Mysql',(err,result) => {
-        if(err){
-            console.log(err)
-        } else{
-            res.send(result)
-        }
-    })
-})
+app.delete("/deleteMysql/:id", (req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    db.query("DELETE FROM DB_Inv_Mysql WHERE id = ?", id, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
 
-app.put("/updateMysql",(req,res) => {
+  app.put("/updateMysql",(req,res) => {
     console.log(req.body)
     const id = req.body.id
     const rdbms = req.body.rdbms
@@ -165,21 +100,22 @@ app.put("/updateMysql",(req,res) => {
             res.send(result)
         }
     });
+});
+
+
+
+
+app.get('/retrieveMssql',(req,res) => {
+    db.query('SELECT * FROM DB_Inv_Mssql',(err,result) => {
+        if(err){
+            console.log(err)
+        } else{
+            res.send(result)
+        }
+    })
 })
-
-app.delete("/deleteMysql/:id", (req, res) => {
-    const id = req.params.id;
-    console.log(id)
-    db.query("DELETE FROM DB_Inv_Mysql WHERE id = ?", id, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-  });
-
 app.post('/createMssql',(req,res) => {
+    console.log(req.body)
     const rdbms = req.body.rdbms
     const sql_virtual_name = req.body.sql_virtual_name
     const instance_name = req.body.instance_name
@@ -212,18 +148,20 @@ app.post('/createMssql',(req,res) => {
 
 });
 
-app.get('/retrieveMssql',(req,res) => {
-    db.query('SELECT * FROM DB_Inv_Mssql',(err,result) => {
-        if(err){
-            console.log(err)
-        } else{
-            res.send(result)
-        }
-    })
-})
+app.delete("/deleteMssql/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("DELETE FROM DB_Inv_Mssql WHERE id = ?", id, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
 
 app.put("/updateMssql",(req,res) => {
-    const id = req.body.id;
+   console.log(req.body)
+   const id = req.body.id
     const rdbms = req.body.rdbms
     const sql_virtual_name = req.body.sql_virtual_name
     const instance_name = req.body.instance_name
@@ -253,18 +191,19 @@ app.put("/updateMssql",(req,res) => {
     });
 })
 
-app.delete("/deleteMssql/:id", (req, res) => {
-    const id = req.params.id;
-    db.query("DELETE FROM DB_Inv_Mssql WHERE id = ?", id, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-  });
+
+app.get('/retrieveMongo',(req,res) => {
+    db.query('SELECT * FROM DB_Inv_Mongo',(err,result) => {
+        if(err){
+            console.log(err)
+        } else{
+            res.send(result)
+        }
+    })
+})
 
 app.post('/createMongo',(req,res) => {
+    console.log(req.body)
     const rdbms = req.body.rdbms
     const instance_name = req.body.instance_name
     const port = req.body.port
@@ -298,18 +237,21 @@ app.post('/createMongo',(req,res) => {
 
 });
 
-app.get('/retrieveMongo',(req,res) => {
-    db.query('SELECT * FROM DB_Inv_Mongo',(err,result) => {
-        if(err){
-            console.log(err)
-        } else{
-            res.send(result)
-        }
-    })
-})
+app.delete("/deleteMongo/:id", (req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    db.query("DELETE FROM DB_Inv_Mongo WHERE id = ?", id, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
 
 app.put("/updateMongo",(req,res) => {
-    const id = req.body.id;
+   console.log(req.body)
+   const id = req.body.id;
     const rdbms = req.body.rdbms
     const instance_name = req.body.instance_name
     const port = req.body.port
@@ -340,17 +282,17 @@ app.put("/updateMongo",(req,res) => {
     });
 })
 
-app.delete("/deleteMongo/:id", (req, res) => {
-    const id = req.params.id;
-    db.query("DELETE FROM DB_Inv_Mongo WHERE id = ?", id, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-  });
 
+
+app.get('/retrieveOracle',(req,res) => {
+    db.query('SELECT * FROM DB_Inv_Oracle',(err,result) => {
+        if(err){
+            console.log(err)
+        } else{
+            res.send(result)
+        }
+    })
+})
 app.post('/createOracle',(req,res) => {
     const instance_name = req.body.instance_name
     const db_name = req.body.db_name
@@ -383,15 +325,17 @@ app.post('/createOracle',(req,res) => {
 
 });
 
-app.get('/retrieveOracle',(req,res) => {
-    db.query('SELECT * FROM DB_Inv_Oracle',(err,result) => {
-        if(err){
-            console.log(err)
-        } else{
-            res.send(result)
-        }
-    })
-})
+app.delete("/deleteOracle/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("DELETE FROM DB_Inv_Oracle WHERE id = ?", id, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
+
 
 app.put("/updateOracle",(req,res) => {
     const id = req.body.id;
@@ -423,16 +367,7 @@ app.put("/updateOracle",(req,res) => {
     });
 })
 
-app.delete("/deleteOracle/:id", (req, res) => {
-    const id = req.params.id;
-    db.query("DELETE FROM DB_Inv_Oracle WHERE id = ?", id, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-  });
+
 
 app.post('/createPostgres',(req,res) => {
     const rdbms = req.body.rdbms
@@ -455,7 +390,7 @@ app.post('/createPostgres',(req,res) => {
     const host_name = req.body.host_name
     const distribution = req.body.distribution
 
-    db.query('INSERT INTO DB_Inv_Postgresql(rdbms,port,db_name,status,domain,environment,version,ha_role,db_size,db_replication_type,dba_sme,sn_group,compliance,comments,db_dfo,app_name,host_name,distribution) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+    db.query('INSERT INTO DB_Inv_Postgresql(rdbms,instance_name,port,db_name,status,domain,environment,version,ha_role,db_size,db_replication_type,dba_sme,sn_group,compliance,comments,db_dfo,app_name,host_name,distribution) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
     [rdbms,instance_name,port,db_name,status,domain,environment,version,ha_role,db_size,db_replication_type,dba_sme,sn_group,compliance,comments,db_dfo,app_name,host_name,distribution], 
     (err, result) => {
         if(err){
@@ -520,7 +455,84 @@ app.delete("/deletePostgres/:id", (req, res) => {
   });
 
 
+  app.post('/createApp',(req,res) => {
+    console.log(req.body)
+	const app_name=req.body.app_name
+    const app_key = req.body.app_key
+    const current_state = req.body.current_state
+    const reporting_name = req.body.reporting_name
+    const brief_func = req.body.brief_func
+    const apm_owner = req.body.apm_owner
+    const app_type = req.body.app_type
+    const app_tech = req.body.app_tech
+    const db_tech = req.body.db_tech
+    const no_users = req.body.no_users
+    const availability = req.body.availability
+    const oper_impact = req.body.oper_impact
+    const revenue_impact = req.body.revenue_impact
+    const stores_or_custimpact = req.body.stores_or_custimpact
+    
 
-app.listen(3001, () => {
-    console.log("Running in 3001")
+    db.query('INSERT INTO App_Inv(app_name,app_key,current_state,reporting_name,brief_func,apm_owner,app_type,app_tech,db_tech,no_users,availability,oper_impact,revenue_impact,stores_or_custimpact) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+    [app_name,app_key,current_state,reporting_name,brief_func,apm_owner,app_type,app_tech,db_tech,no_users,availability,oper_impact,revenue_impact,stores_or_custimpact], 
+    (err, result) => {
+        if(err){
+            console.log(err)
+        }else{
+            res.send("Insererted..")
+        }
+    });
+
+});
+
+app.get('/retrieveApp',(req,res) => {
+    db.query('SELECT * FROM App_Inv',(err,result) => {
+        if(err){
+            console.log(err)
+        } else{
+            res.send(result)
+        }
+    })
+})
+
+app.put("/updateApp",(req,res) => {
+    console.log(req.body)
+   const app_name=req.body.app_name
+    const app_key = req.body.app_key
+    const current_state = req.body.current_state
+    const reporting_name = req.body.reporting_name
+    const brief_func = req.body.brief_func
+    const apm_owner = req.body.apm_owner
+    const app_type = req.body.app_type
+    const app_tech = req.body.app_tech
+    const db_tech = req.body.db_tech
+    const no_users = req.body.no_users
+    const availability = req.body.availability
+    const oper_impact = req.body.oper_impact
+    const revenue_impact = req.body.revenue_impact
+    const stores_or_custimpact = req.body.stores_or_custimpact
+    db.query(`UPDATE App_Inv SET app_key=?,current_state=?,reporting_name=?,brief_func=?,apm_owner=?,app_type=?,app_tech=?,db_tech=?,no_users=?,availability=?,oper_impact=?,revenue_impact=?,stores_or_custimpact=? where app_name = ? `,[app_key,current_state,reporting_name,brief_func,apm_owner,app_type,app_tech,db_tech,no_users,availability,oper_impact,revenue_impact,stores_or_custimpact,app_name],(err,result) => {
+        if(err){
+            console.log(err)
+        }else{
+            res.send(result)
+        }
+    });
+})
+
+app.delete("/deleteApp/:app_name", (req, res) => {
+    const app_name1 = req.params.app_name;
+    //console.log(id)
+    db.query("DELETE FROM App_Inv WHERE app_name = ?", app_name1, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
+
+
+app.listen(8000, () => {
+    console.log("Running in 8000")
 });
