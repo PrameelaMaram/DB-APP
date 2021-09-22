@@ -5,7 +5,7 @@ import * as AiIcons from "react-icons/ai";
 import { SidebarData } from './SidebarData';
 import { IconContext } from 'react-icons/lib';
 import SubMenu from './SubMenu';
-import "./Navbar.css"; 
+
 import styled from 'styled-components';
 
 const NavIcon = styled(Link)`
