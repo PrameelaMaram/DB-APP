@@ -4,7 +4,7 @@ import { MysqlTable,MSsqlTable,MongoTable,OracleTable,PostgresTable,AppTable} fr
 export const Inventory = () => {
     return (
       <div className='inventory'>
-        <h1>Inventory</h1>
+      
       </div>
     );
   };

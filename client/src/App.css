@@ -14,10 +14,10 @@
      
 }
 .home{
-  background-image: url(db.jpg);
-    background-size: cover;
-    color: rgb(5, 39, 39);
-    font-size: 3rem;
+  background-image: url(home.jpg);
+  background-size: cover;
+  color: rgb(5, 39, 39);
+  font-size: 3rem;
 }
 .material-icons {
   font-family: 'Material Icons';
@@ -35,41 +35,39 @@
   -webkit-font-smoothing: antialiased;
 }
 .inventory{
-    background-image: url(db.jpg);
+    background-image: url(inventory.JPG);
     background-size: cover;
+   
+    
     background-position: center;
+    
     color: rgb(154, 212, 212);
+}
+.h3color{
+  color:#FF8800;
 }
 .home,
 .inventory,
 .analytics,
 .feedback {
   display: flex;
-  height: 90vh;
+  height: 100vh;
   align-items: center;
   justify-content: center;
   font-size: 3rem;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-.App {
-  width: 100vw;
-  height: 100vh;
-  background-image: url(db.jpg);
-    background-size: cover;
-    background-position: center;
+
 }
 
 .App {
   width: 100vw;
   height: 100vh;
   //background-color: lightblue;
+  background-image: url(main.png);
+    background-size: cover;
 
 }
 
-body {
-  margin: 0;
-  padding: 0;
-}
 
 .SidebarList{
   height:auto;

@@ -358,7 +358,7 @@ app.put("/updateOracle",(req,res) => {
     const app_name = req.body.app_name
     const host_name = req.body.host_name
     
-    db.query(`UPDATE DB_Inv_Oracle SET instance_name=?,db_name=?,rdbms=?,status=?,domain=?,environment=?,version=?,ha_role=?,db_dfo=?,oracle_home=?,port_num=?,db_size=?,dba_sme=?,sn_group=?,compliance=?,comments=?,app_name=?,host_name=? where id = ? `,[rdbms,instance_name,db_name,status,domain,environment,version,ha_role,db_dfo,oracle_home,port_num,db_size,dba_sme,sn_group,compliance,comments,app_name,host_name,id],(err,result) => {
+    db.query(`UPDATE DB_Inv_Oracle SET instance_name=?,db_name=?,rdbms=?,status=?,domain=?,environment=?,version=?,ha_role=?,db_dfo=?,oracle_home=?,port_num=?,db_size=?,dba_sme=?,sn_group=?,compliance=?,comments=?,app_name=?,host_name=? where id = ? `,[instance_name,db_name,rdbms,status,domain,environment,version,ha_role,db_dfo,oracle_home,port_num,db_size,dba_sme,sn_group,compliance,comments,app_name,host_name,id],(err,result) => {
         if(err){
             console.log(err)
         }else{
@@ -478,6 +478,7 @@ app.delete("/deletePostgres/:id", (req, res) => {
     (err, result) => {
         if(err){
             console.log(err)
+    
         }else{
             res.send("Insererted..")
         }
@@ -497,7 +498,8 @@ app.get('/retrieveApp',(req,res) => {
 
 app.put("/updateApp",(req,res) => {
     console.log(req.body)
-   const app_name=req.body.app_name
+    const oldapp_name=req.body.oldapp_name
+    const newapp_name=req.body.newapp_name
     const app_key = req.body.app_key
     const current_state = req.body.current_state
     const reporting_name = req.body.reporting_name
@@ -511,7 +513,7 @@ app.put("/updateApp",(req,res) => {
     const oper_impact = req.body.oper_impact
     const revenue_impact = req.body.revenue_impact
     const stores_or_custimpact = req.body.stores_or_custimpact
-    db.query(`UPDATE App_Inv SET app_key=?,current_state=?,reporting_name=?,brief_func=?,apm_owner=?,app_type=?,app_tech=?,db_tech=?,no_users=?,availability=?,oper_impact=?,revenue_impact=?,stores_or_custimpact=? where app_name = ? `,[app_key,current_state,reporting_name,brief_func,apm_owner,app_type,app_tech,db_tech,no_users,availability,oper_impact,revenue_impact,stores_or_custimpact,app_name],(err,result) => {
+    db.query(`UPDATE App_Inv SET app_name=?,app_key=?,current_state=?,reporting_name=?,brief_func=?,apm_owner=?,app_type=?,app_tech=?,db_tech=?,no_users=?,availability=?,oper_impact=?,revenue_impact=?,stores_or_custimpact=? where app_name = ? `,[newapp_name,app_key,current_state,reporting_name,brief_func,apm_owner,app_type,app_tech,db_tech,no_users,availability,oper_impact,revenue_impact,stores_or_custimpact,oldapp_name],(err,result) => {
         if(err){
             console.log(err)
         }else{
