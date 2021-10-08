@@ -9,9 +9,9 @@ import SubMenu from './SubMenu';
 import styled from 'styled-components';
 
 const NavIcon = styled(Link)`
-  margin-left: 2rem;
+  margin-left: 2rem; //icon placement
   font-size: 2rem;
-  height: 60px;
+  height: 60px; // x icon from top
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -19,7 +19,7 @@ const NavIcon = styled(Link)`
 
 
 const SidebarNav = styled.nav`
-  background: #15171c;
+  background: #15171c; //leftside sidebar
   width: 200px;
   height: 100vh;
   display: flex;
@@ -31,13 +31,16 @@ const SidebarNav = styled.nav`
   z-index: 100;
 `;
 
+//put above for scrolling
+//overflow-x: hidden;
+
 const SidebarWrap = styled.div`
-  width: 100%;
+  width: 100%; //puts the icons in sequence rather than horizantal
 `;
 
 const Nav = styled.div`
   background: #15171c;
-  height: 50px;
+  height: 50px; // top rectangle
 
   width:auto;
   display: flex;
